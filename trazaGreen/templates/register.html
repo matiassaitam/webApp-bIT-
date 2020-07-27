@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Sign Up
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('static', filename='signin.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-lg-6 offset-md-3">
+    <div class="card card-body">
+      <form class="needs-validation" method="POST">
+        <h2 class="form-signin-heading">Registrese</h2>
+        {# El hidden_tag es caracteristica de seguridad del CSRF. #}
+        {{ form.hidden_tag() }}
+        {{ wtf.form_field(form.username) }}
+        {{ wtf.form_field(form.email) }}
+        {{ wtf.form_field(form.password) }}
+        {{ wtf.form_field(form.pass_confirm) }}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Registrarse</button>
+        <div class="form-footer">
+            <span>o haz log in con tu cuenta social</span>
+            <ul class="social">
+                <li class="navbar-brand"><a class="facebook" href=""><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                <li class="navbar-brand"><a class="twitter" href=""><i class="fab fa-twitter"></i>Twitter</a></li>
+            </ul>
+        </div>
+    </form>
+  </div>
+    </div>
+      </div>
+</div>
+{% endblock %}

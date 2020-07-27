@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="jumbotron">
+  <div align='center'>
+    <h1 >Bienvenido a la página de {{current_user.username}}</h1>
+    <img align='center' src="{{ url_for('static', filename='profile_pics/' + current_user.imagen_perfil) }}">
+    <p>{{ current_user.email }}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <div class="card card-body">
+      <div class="form">
+              <form  method="POST" action = "" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <div class="form-group">
+                  {{ form.username.label(class="form-group") }}
+                  {{form.username(class='form-control')  }}
+                </div
+                <div class="form-group">
+                  {{ form.email.label(class="form-group") }}
+                  {{form.email(class='form-control')  }}
+                </div>
+                <div class="form-group">
+                  {{ form.picture.label(class="form-group") }}
+                  {{ form.picture(class="form-control-file") }}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+
+              </form>
+              <div class="card-footer">
+                <small class="text">Todos los derechos reservados TrazaGreen ©
+              </div>
+              <br>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

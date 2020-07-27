@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block content %}
+  <div class="jumbotron">
+    <h1>Traza Green Corp</h1>
+    <p>Welcome to Traza Greens Company's cultivos</p>
+  </div>
+  {# Go through each Cultivo #}
+  {% for cultivo in mis_cultivos.items%}
+  {% if cultivo.author == current_user %}
+  <div class="col-md-7">
+    <div class="card card-body">
+      <table class="table table-striped table-hover table-bordered table-sm bg-white">
+        <thead>
+          <tr>
+            <td>ID</td>
+            <td>Denominacion</td>
+            <td>Lote</td>
+            <td>Origen</td>
+            <td>Caracteristicas</td>
+            <td>Fecha</td>
+            <td>Operations</td>
+          </tr>
+        </thead>
+        <tbody>
+
+          <tr>
+            <td>{{cultivo.id}}</td>
+            <td>{{cultivo.nombre_cultivo}}</td>
+            <td>{{cultivo.lote}}</td>
+            <td>{{cultivo.origen}}</td>
+            <td>{{cultivo.caracteristicas}}</td>
+            <td>{{ cultivo.fecha.strftime('%Y-%m-%d') }}</td>
+            <div><td>
+              <a href="{{ url_for('mis_cultivos.update', mi_cultivo_id=cultivo.id) }}" class="btn btn-warning btn-md btn-block">Editar</a>
+              <button type="button" class="btn btn-danger btn-md btn-block" data-toggle="modal" data-target="#del_modal">Eliminar</button>
+            </div></td>
+          </tr>
+
+        </tbody>
+      </table>
+      </div>
+  </div>
+
+  <div class="modal" tabblog="-1" role="dialog" id="del_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Esta a punto de eliminar su cultivo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Esta seguro de que quiere eliminar este cultivo?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-warning" data-dismiss="modal">Cancelar</button>
+
+          <form action="{{ url_for('mis_cultivos.delete_cultivo', mi_cultivo_id=cultivo.id) }}" method="POST">
+            <input class="btn btn-danger" type="submit" value="Eliminar">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+  {% endfor %}
+  <div class="container">
+
+   <nav aria-label="Page navigation example">
+     <ul class="pagination justify-content-center">
+       {% for page_num in mis_cultivos.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if mis_cultivos.page == page_num %}
+          <li class="page-item disabled">
+            <a class="page-link" href="{{ url_for('core.trazaCultivo', page=page_num) }}">{{ page_num }}</a></li>
+          </li>
+          {% else %}
+            <li class="page-item"><a class="page-link" href="{{ url_for('core.trazaCultivo', page=page_num) }}">{{ page_num }}</a></li>
+          {% endif %}
+      {% endfor %}
+      </ul>
+    </nav>
+{% endblock %}
